@@ -1,0 +1,24 @@
+build docker file inside influxdbConnect folder with name "influxdb-connect:1.2.3" and push it to any repo, \
+ then change the same repo and name in extra-list.yaml file.
+
+run influxdb using chart:
+
+
+
+helm upgrade influxdb bitnami/influxdb \
+
+    --set auth.admin.password="admin12345" \
+ 
+    --set auth.user.password="admin12345" \
+   
+    --set auth.readUser.password="admin12345" \
+
+    --set auth.writeUser.password="admin12345"
+
+
+
+run kafka using chrt:
+
+helm upgrade --install kafka kafka
+
+influxdb gui should be accessible using admin/admin12345
