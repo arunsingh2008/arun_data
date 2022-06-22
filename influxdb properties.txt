@@ -1,0 +1,86 @@
+docker run -p 8086:8086 \
+      -v influxdb:/var/lib/influxdb \
+      -v influxdb2:/var/lib/influxdb2 \
+      -v influxdb2-config:/etc/influxdb2 \
+      -v $PWD/influxdb.conf:/etc/influxdb/influxdb.conf \
+      -e DOCKER_INFLUXDB_INIT_MODE=upgrade \
+      -e DOCKER_INFLUXDB_INIT_USERNAME=my-user \
+      -e DOCKER_INFLUXDB_INIT_PASSWORD=my-password \
+      -e DOCKER_INFLUXDB_INIT_ORG=my-org \
+      -e DOCKER_INFLUXDB_INIT_BUCKET=my-bucket \
+      influxdb:2.0
+
+
+influx write -b my_bucket -t Tv0dvWgvd5XMtHkQ5aKZzS5djIIRZEWRiw3lmeH0zhwDh_i9LRAbRXRweEdvBJLJx1LkWLXkNBzoJc9HXJM2sA== -o my_org -f  writer.csv --header "#constant measurement,birds" --header "#datatype long,tag"
+
+--header "#constant measurement,birds" \
+
+
+sighted,loc
+12,Boise
+78,Boise
+54,Seattle
+112,Seattle
+9,Detroit
+135,Detroit
+
+
+from($influxdb.bucket: "my_bucket")
+  |> range($startTimestamp: v.timeRangeStart, $endTimestamp: v.timeRangeStop)
+  |> filter(fn: (r) => r["_measurement"] == "birds")
+  |> filter(fn: (r) => r["_field"] == "sighted")
+  |> filter(fn: (r) => r["loc"] == "Boise" or r["loc"] == "Detroit" or r["loc"] == "Seattle")
+  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)
+  |> yield(name: "mean")
+
+
+from($influxdb.bucket: "my_bucket")   |> range($startTimestamp: v.timeRangeStart, $endTimestamp: v.timeRangeStop)   |> filter(fn: (r) => r["_measurement"] == "birds" or r["_measurement"] == "boltdb_reads_total")   |> filter(fn: (r) => r["_field"] == "counter")   |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)   |> yield(name: "mean") |> limit(n: $batch.size)
+
+
+
+{
+  "name": "InfluxDB2SourceConnector_2",
+  "config": {
+    "connector.class": "InfluxDB2Source",
+    "name": "InfluxDB2SourceConnector_2",
+    "influxdb.url": "http://34.148.173.91:8086/",
+    "influxdb.token": "****************************************************************************************",
+    "influxdb.org.id": "my_org",
+    "influxdb.bucket": "my_bucket",
+    "query": "from($influxdb.bucket: \"my_bucket\")   |> range($startTimestamp: v.timeRangeStart, $endTimestamp: v.timeRangeStop)   |> filter(fn: (r) => r[\"_measurement\"] == \"birds\" or r[\"_measurement\"] == \"boltdb_reads_total\")   |> filter(fn: (r) => r[\"_field\"] == \"counter\")   |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)   |> yield(name: \"mean\") |> limit(n: $batch.size)",
+    "mode": "timestamp",
+    "topic.mapper": "measurement",
+    "topic.prefix": "my_",
+    "output.data.format": "JSON",
+    "tasks.max": "1"
+  }
+}
+
+
+Connector Summary
+Name
+InfluxDB2SourceConnector_2
+Connector Class
+InfluxDB2Source
+Max Tasks
+1
+influxdb.url
+http://34.148.173.91:8086/
+influxdb.token
+****************************************************************************************
+influxdb.org.id
+my_org
+influxdb.bucket
+my_bucket
+query
+from($influxdb.bucket: "my_bucket") |> range($startTimestamp: v.timeRangeStart, $endTimestamp: v.timeRangeStop) |> filter(fn: (r) => r["_measurement"] == "birds" or r["_measurement"] == "boltdb_reads_total") |> filter(fn: (r) => r["_field"] == "counter") |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false) |> yield(name: "mean") |> limit(n: $batch.size)
+mode
+timestamp
+topic.mapper
+measurement
+topic.prefix
+my_
+output.data.format
+JSON
+tasks.max
+1
