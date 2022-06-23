@@ -1,0 +1,31 @@
+name=InfluxDBSourceConnector
+connector.class=io.confluent.influxdb.source.InfluxdbSourceConnector
+tasks.max=1
+topic.prefix=influx_
+influxdb.db=testdb
+mode=timestamp
+value.converter=org.apache.kafka.connect.json.JsonConverter
+value.converter.schemas.enable=false
+influxdb.url=http://influxdb.default.svc.cluster.local:8086
+influxdb.username="root"
+influxdb.password="root"
+query=SELECT "host","region","value" FROM cpu
+
+
+
+kubectl create deployment influxdb --image=docker.io/influxdb:1.6.4
+
+kubectl create secret generic influxdb-creds \
+  --from-literal=INFLUXDB_DATABASE=testdb \
+  --from-literal=INFLUXDB_USERNAME=root \
+  --from-literal=INFLUXDB_PASSWORD=root \
+  --from-literal=INFLUXDB_HOST=influxdb
+
+kubectl expose deployment influxdb --port 8086
+
+kubectl describe pod influxdb  --- To get the pod IP.
+
+
+influx
+create database testdb
+INSERT cpu,host=serverA,region=us_west value=0.64
