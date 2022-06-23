@@ -29,3 +29,5 @@ kubectl describe pod influxdb  --- To get the pod IP.
 influx
 create database testdb
 INSERT cpu,host=serverA,region=us_west value=0.64
+INSERT cpu,host=serverB,region=us_west value=0.75
+INSERT cpu,host=serverC,region=us_west value=0.80
