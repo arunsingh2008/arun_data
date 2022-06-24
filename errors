@@ -1,0 +1,3 @@
+%4|1656096689.250|FAIL|client-1#consumer-1| [thrd:34.72.64.245:9092/bootstrap]: 34.72.64.245:9092/bootstrap: Connection setup timed out in state CONNECT (after 30032ms in state CONNECT)
+%4|1656096720.248|FAIL|client-1#consumer-1| [thrd:34.72.64.245:9092/bootstrap]: 34.72.64.245:9092/bootstrap: Connection setup timed out in state CONNECT (after 30030ms in state CONNECT, 1 identical error(s) suppressed)
+%4|1656096751.249|FAIL|client-1#consumer-1| [thrd:34.72.64.245:9092/bootstrap]: 34.72.64.245:9092/bootstrap: Connection setup timed out in state CONNECT (after 30031ms in state CONNECT, 1 identical error(s) suppressed)
