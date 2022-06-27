@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: dnsutils
+  namespace: default
+spec:
+  containers:
+  - name: python_script
+    image: python:3.9.2
+    command:
+      - sleep
+      - "36000"
+    imagePullPolicy: IfNotPresent
+  restartPolicy: Always
