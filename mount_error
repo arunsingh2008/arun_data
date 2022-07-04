@@ -1,0 +1,142 @@
+Name:           kafka-0
+Namespace:      ricxapp
+Priority:       0
+Node:           ip-172-31-7-241/172.31.7.241
+Start Time:     Mon, 04 Jul 2022 11:33:06 +0000
+Labels:         app.kubernetes.io/component=kafka
+                app.kubernetes.io/instance=kafka
+                app.kubernetes.io/managed-by=Helm
+                app.kubernetes.io/name=kafka
+                controller-revision-hash=kafka-75d7594b8b
+                helm.sh/chart=kafka-18.0.0
+                statefulset.kubernetes.io/pod-name=kafka-0
+Annotations:    <none>
+Status:         Pending
+IP:             
+IPs:            <none>
+Controlled By:  StatefulSet/kafka
+Containers:
+  kafka:
+    Container ID:  
+    Image:         docker.io/bitnami/kafka:3.2.0-debian-11-r3
+    Image ID:      
+    Ports:         9092/TCP, 9093/TCP
+    Host Ports:    0/TCP, 0/TCP
+    Command:
+      /scripts/setup.sh
+    State:          Waiting
+      Reason:       ContainerCreating
+    Ready:          False
+    Restart Count:  0
+    Liveness:       tcp-socket :kafka-client delay=10s timeout=5s period=10s #success=1 #failure=3
+    Readiness:      tcp-socket :kafka-client delay=5s timeout=5s period=10s #success=1 #failure=6
+    Environment:
+      BITNAMI_DEBUG:                                       false
+      MY_POD_IP:                                            (v1:status.podIP)
+      MY_POD_NAME:                                         kafka-0 (v1:metadata.name)
+      KAFKA_CFG_ZOOKEEPER_CONNECT:                         kafka-zookeeper
+      KAFKA_INTER_BROKER_LISTENER_NAME:                    INTERNAL
+      KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP:            INTERNAL:PLAINTEXT,CLIENT:PLAINTEXT
+      KAFKA_CFG_LISTENERS:                                 INTERNAL://:9093,CLIENT://:9092
+      KAFKA_CFG_ADVERTISED_LISTENERS:                      INTERNAL://$(MY_POD_NAME).kafka-headless.ricxapp.svc.cluster.local:9093,CLIENT://$(MY_POD_NAME).kafka-headless.ricxapp.svc.cluster.local:9092
+      ALLOW_PLAINTEXT_LISTENER:                            yes
+      KAFKA_ZOOKEEPER_PROTOCOL:                            PLAINTEXT
+      KAFKA_VOLUME_DIR:                                    /bitnami/kafka
+      KAFKA_LOG_DIR:                                       /opt/bitnami/kafka/logs
+      KAFKA_CFG_DELETE_TOPIC_ENABLE:                       false
+      KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE:                 true
+      KAFKA_HEAP_OPTS:                                     -Xmx1024m -Xms1024m
+      KAFKA_CFG_LOG_FLUSH_INTERVAL_MESSAGES:               10000
+      KAFKA_CFG_LOG_FLUSH_INTERVAL_MS:                     1000
+      KAFKA_CFG_LOG_RETENTION_BYTES:                       1073741824
+      KAFKA_CFG_LOG_RETENTION_CHECK_INTERVALS_MS:          300000
+      KAFKA_CFG_LOG_RETENTION_HOURS:                       1
+      KAFKA_CFG_MESSAGE_MAX_BYTES:                         1000012
+      KAFKA_CFG_LOG_SEGMENT_BYTES:                         1073741824
+      KAFKA_CFG_LOG_DIRS:                                  /bitnami/kafka/data
+      KAFKA_CFG_DEFAULT_REPLICATION_FACTOR:                1
+      KAFKA_CFG_OFFSETS_TOPIC_REPLICATION_FACTOR:          1
+      KAFKA_CFG_TRANSACTION_STATE_LOG_REPLICATION_FACTOR:  1
+      KAFKA_CFG_TRANSACTION_STATE_LOG_MIN_ISR:             1
+      KAFKA_CFG_NUM_IO_THREADS:                            8
+      KAFKA_CFG_NUM_NETWORK_THREADS:                       3
+      KAFKA_CFG_NUM_PARTITIONS:                            1
+      KAFKA_CFG_NUM_RECOVERY_THREADS_PER_DATA_DIR:         1
+      KAFKA_CFG_SOCKET_RECEIVE_BUFFER_BYTES:               102400
+      KAFKA_CFG_SOCKET_REQUEST_MAX_BYTES:                  104857600
+      KAFKA_CFG_SOCKET_SEND_BUFFER_BYTES:                  102400
+      KAFKA_CFG_ZOOKEEPER_CONNECTION_TIMEOUT_MS:           6000
+      KAFKA_CFG_AUTHORIZER_CLASS_NAME:                     
+      KAFKA_CFG_ALLOW_EVERYONE_IF_NO_ACL_FOUND:            true
+      KAFKA_CFG_SUPER_USERS:                               User:admin
+    Mounts:
+      /bitnami/kafka from data (rw)
+      /opt/bitnami/kafka/logs from logs (rw)
+      /scripts/setup.sh from scripts (rw,path="setup.sh")
+      /var/run/secrets/kubernetes.io/serviceaccount from kafka-token-v76kq (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             False 
+  ContainersReady   False 
+  PodScheduled      True 
+Volumes:
+  data:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  data-kafka-0
+    ReadOnly:   false
+  scripts:
+    Type:      ConfigMap (a volume populated by a ConfigMap)
+    Name:      kafka-scripts
+    Optional:  false
+  logs:
+    Type:       EmptyDir (a temporary directory that shares a pod's lifetime)
+    Medium:     
+    SizeLimit:  <unset>
+  kafka-token-v76kq:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  kafka-token-v76kq
+    Optional:    false
+QoS Class:       BestEffort
+Node-Selectors:  <none>
+Tolerations:     node.kubernetes.io/not-ready:NoExecute for 300s
+                 node.kubernetes.io/unreachable:NoExecute for 300s
+Events:
+  Type     Reason       Age        From                      Message
+  ----     ------       ----       ----                      -------
+  Normal   Scheduled    <unknown>  default-scheduler         Successfully assigned ricxapp/kafka-0 to ip-172-31-7-241
+  Warning  FailedMount  52s        kubelet, ip-172-31-7-241  MountVolume.SetUp failed for volume "pvc-eb8b266e-904c-4a5b-8198-002e318b3389" : mount failed: exit status 32
+Mounting command: systemd-run
+Mounting arguments: --description=Kubernetes transient mount for /var/lib/kubelet/pods/e899f1d4-e791-487d-8a55-4d223f765c1b/volumes/kubernetes.io~nfs/pvc-eb8b266e-904c-4a5b-8198-002e318b3389 --scope -- mount -t nfs -o vers=3 10.103.200.176:/export/pvc-eb8b266e-904c-4a5b-8198-002e318b3389 /var/lib/kubelet/pods/e899f1d4-e791-487d-8a55-4d223f765c1b/volumes/kubernetes.io~nfs/pvc-eb8b266e-904c-4a5b-8198-002e318b3389
+Output: Running scope as unit: run-rc23a73434e8947438be8bf50ab06e930.scope
+mount.nfs: access denied by server while mounting 10.103.200.176:/export/pvc-eb8b266e-904c-4a5b-8198-002e318b3389
+  Warning  FailedMount  51s  kubelet, ip-172-31-7-241  MountVolume.SetUp failed for volume "pvc-eb8b266e-904c-4a5b-8198-002e318b3389" : mount failed: exit status 32
+Mounting command: systemd-run
+Mounting arguments: --description=Kubernetes transient mount for /var/lib/kubelet/pods/e899f1d4-e791-487d-8a55-4d223f765c1b/volumes/kubernetes.io~nfs/pvc-eb8b266e-904c-4a5b-8198-002e318b3389 --scope -- mount -t nfs -o vers=3 10.103.200.176:/export/pvc-eb8b266e-904c-4a5b-8198-002e318b3389 /var/lib/kubelet/pods/e899f1d4-e791-487d-8a55-4d223f765c1b/volumes/kubernetes.io~nfs/pvc-eb8b266e-904c-4a5b-8198-002e318b3389
+Output: Running scope as unit: run-r4efe5bebdffd4c1ba453fe1431511e5d.scope
+mount.nfs: access denied by server while mounting 10.103.200.176:/export/pvc-eb8b266e-904c-4a5b-8198-002e318b3389
+  Warning  FailedMount  50s  kubelet, ip-172-31-7-241  MountVolume.SetUp failed for volume "pvc-eb8b266e-904c-4a5b-8198-002e318b3389" : mount failed: exit status 32
+Mounting command: systemd-run
+Mounting arguments: --description=Kubernetes transient mount for /var/lib/kubelet/pods/e899f1d4-e791-487d-8a55-4d223f765c1b/volumes/kubernetes.io~nfs/pvc-eb8b266e-904c-4a5b-8198-002e318b3389 --scope -- mount -t nfs -o vers=3 10.103.200.176:/export/pvc-eb8b266e-904c-4a5b-8198-002e318b3389 /var/lib/kubelet/pods/e899f1d4-e791-487d-8a55-4d223f765c1b/volumes/kubernetes.io~nfs/pvc-eb8b266e-904c-4a5b-8198-002e318b3389
+Output: Running scope as unit: run-r28ecbbba2158455ca92d2a6a9acfc2f8.scope
+mount.nfs: access denied by server while mounting 10.103.200.176:/export/pvc-eb8b266e-904c-4a5b-8198-002e318b3389
+  Warning  FailedMount  48s  kubelet, ip-172-31-7-241  MountVolume.SetUp failed for volume "pvc-eb8b266e-904c-4a5b-8198-002e318b3389" : mount failed: exit status 32
+Mounting command: systemd-run
+Mounting arguments: --description=Kubernetes transient mount for /var/lib/kubelet/pods/e899f1d4-e791-487d-8a55-4d223f765c1b/volumes/kubernetes.io~nfs/pvc-eb8b266e-904c-4a5b-8198-002e318b3389 --scope -- mount -t nfs -o vers=3 10.103.200.176:/export/pvc-eb8b266e-904c-4a5b-8198-002e318b3389 /var/lib/kubelet/pods/e899f1d4-e791-487d-8a55-4d223f765c1b/volumes/kubernetes.io~nfs/pvc-eb8b266e-904c-4a5b-8198-002e318b3389
+Output: Running scope as unit: run-r56fc0f51ae20477296673aff5007463d.scope
+mount.nfs: access denied by server while mounting 10.103.200.176:/export/pvc-eb8b266e-904c-4a5b-8198-002e318b3389
+  Warning  FailedMount  44s  kubelet, ip-172-31-7-241  MountVolume.SetUp failed for volume "pvc-eb8b266e-904c-4a5b-8198-002e318b3389" : mount failed: exit status 32
+Mounting command: systemd-run
+Mounting arguments: --description=Kubernetes transient mount for /var/lib/kubelet/pods/e899f1d4-e791-487d-8a55-4d223f765c1b/volumes/kubernetes.io~nfs/pvc-eb8b266e-904c-4a5b-8198-002e318b3389 --scope -- mount -t nfs -o vers=3 10.103.200.176:/export/pvc-eb8b266e-904c-4a5b-8198-002e318b3389 /var/lib/kubelet/pods/e899f1d4-e791-487d-8a55-4d223f765c1b/volumes/kubernetes.io~nfs/pvc-eb8b266e-904c-4a5b-8198-002e318b3389
+Output: Running scope as unit: run-r12dc77fee97f428c89f2742191640c39.scope
+mount.nfs: access denied by server while mounting 10.103.200.176:/export/pvc-eb8b266e-904c-4a5b-8198-002e318b3389
+  Warning  FailedMount  36s  kubelet, ip-172-31-7-241  MountVolume.SetUp failed for volume "pvc-eb8b266e-904c-4a5b-8198-002e318b3389" : mount failed: exit status 32
+Mounting command: systemd-run
+Mounting arguments: --description=Kubernetes transient mount for /var/lib/kubelet/pods/e899f1d4-e791-487d-8a55-4d223f765c1b/volumes/kubernetes.io~nfs/pvc-eb8b266e-904c-4a5b-8198-002e318b3389 --scope -- mount -t nfs -o vers=3 10.103.200.176:/export/pvc-eb8b266e-904c-4a5b-8198-002e318b3389 /var/lib/kubelet/pods/e899f1d4-e791-487d-8a55-4d223f765c1b/volumes/kubernetes.io~nfs/pvc-eb8b266e-904c-4a5b-8198-002e318b3389
+Output: Running scope as unit: run-rdc75b57625c040dcb551e761e0a8ad09.scope
+mount.nfs: access denied by server while mounting 10.103.200.176:/export/pvc-eb8b266e-904c-4a5b-8198-002e318b3389
+  Warning  FailedMount  19s  kubelet, ip-172-31-7-241  MountVolume.SetUp failed for volume "pvc-eb8b266e-904c-4a5b-8198-002e318b3389" : mount failed: exit status 32
+Mounting command: systemd-run
+Mounting arguments: --description=Kubernetes transient mount for /var/lib/kubelet/pods/e899f1d4-e791-487d-8a55-4d223f765c1b/volumes/kubernetes.io~nfs/pvc-eb8b266e-904c-4a5b-8198-002e318b3389 --scope -- mount -t nfs -o vers=3 10.103.200.176:/export/pvc-eb8b266e-904c-4a5b-8198-002e318b3389 /var/lib/kubelet/pods/e899f1d4-e791-487d-8a55-4d223f765c1b/volumes/kubernetes.io~nfs/pvc-eb8b266e-904c-4a5b-8198-002e318b3389
+Output: Running scope as unit: run-r5b39ed64da164025a1544a1048b12d82.scope
+mount.nfs: access denied by server while mounting 10.103.200.176:/export/pvc-eb8b266e-904c-4a5b-8198-002e318b3389
