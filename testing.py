@@ -10,10 +10,13 @@
 # # print(type(clf))
 # clf.fit(X, Y)
 # print(clf.predict([[-0.8, -1]]))
-import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib
-from sklearn.svm import OneClassSVM
-from sklearn.linear_model import SGDOneClassSVM
-from sklearn.kernel_approximation import Nystroem
-from sklearn.pipeline import make_pipeline
+# import numpy as np
+# import matplotlib.pyplot as plt
+# import matplotlib
+# from sklearn.svm import OneClassSVM
+# from sklearn.linear_model import SGDOneClassSVM
+# from sklearn.kernel_approximation import Nystroem
+# from sklearn.pipeline import make_pipeline
+import time
+for i in range(10):
+  print(f'Hi I am slepping for {time.sleep(i)} seconds')
