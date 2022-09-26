@@ -18,5 +18,7 @@
 # from sklearn.kernel_approximation import Nystroem
 # from sklearn.pipeline import make_pipeline
 import time
+import logging
 for i in range(10):
   print(f'Hi I am slepping for {time.sleep(i)} seconds')
+  logging.info(f'Hi I am slepping for {time.sleep(i)} seconds')
