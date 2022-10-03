@@ -2,5 +2,5 @@ echo "bash script is starting at $(date) "
 ls
 pwd
 python3 testing.py
-date
+echo "This is for auto update in github"
 
