@@ -20,5 +20,6 @@
 import time
 import logging
 for i in range(10):
-  print(f'Hi I am slepping for {time.sleep(i)} seconds')
-  logging.info(f'Hi I am slepping for {time.sleep(i)} seconds')
+  print(f'Hi I am slepping for  1 seconds in print')
+  logging.info(f'Hi I am slepping for 1 seconds login')
+  time.sleep(1)
