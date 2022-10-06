@@ -4,5 +4,5 @@ pwd
 python3 testing.py
 echo "This is for auto update in github"
 echo "for slack notification at $(date) "
-echo "for Sachin Singh $(date) "
+echo "for Sachin Singh $(date) haanji "
 
