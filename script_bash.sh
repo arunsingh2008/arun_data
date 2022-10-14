@@ -7,7 +7,7 @@ python3 -m pytest pytest_test/addition_number_test.py
 # status=${PIPESTATUS[0]} # status of run_tests.py
 if [ $? -ne 0 ]; then
     echo 'ERROR: pytest failed, exiting ...'
-    exit $status
+    exit $1
 fi
 echo "This is for auto update in github"
 
